@@ -1,6 +1,6 @@
 #include <stdexcept>
 #include <algorithm>
-#include "MyVector2.hpp"
+#include "my_vector.hpp"
 
 myVct::myVct() : size(0), capacity(0), ptr(nullptr) {}
 myVct::myVct(int cap) : size(0), capacity(cap), ptr((int*)malloc(cap*sizeof(int))) {}
@@ -25,19 +25,17 @@ void myVct::scale_up()
     {
         capacity *= 2;
     }
-    int *new_ptr = (int *)malloc(capacity * sizeof(int));
-    for (int i = 0; i < size; i++)
-    {
-        *(new_ptr + i) = *(ptr + i);
-    }
-    free(ptr);
-    ptr = new_ptr;
+    move(capacity);
 }
 
 
 void myVct::scale_down()
 {
     capacity = capacity * 2 / 3;
+    move(capacity);
+}
+
+void myVct::move(int capacity){
     int *new_ptr = (int *)malloc(capacity * sizeof(int));
     for (int i = 0; i < size; i++)
     {
@@ -71,7 +69,7 @@ void myVct::pop_back()
         capacity = 0;
     }
 
-    if (capacity / 2 == size)
+    if (capacity / 4 == size)
         scale_down();
 }
 

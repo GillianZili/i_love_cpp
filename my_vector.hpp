@@ -12,6 +12,7 @@ public:
 private:
     void scale_up();
     void scale_down();
+    void move(int capacity);
 
     int size;
     int capacity;
